@@ -1,0 +1,185 @@
+Start MySQL Database (Docker):
+   cd C:\Personal\TicketingSystem\services\resource-requisition
+   docker-compose up db
+Start Backend Service:
+   cd C:\Personal\TicketingSystem\services\resource-requisition
+   npm run dev
+Start Frontend Service:
+   cd C:\Personal\TicketingSystem\client
+   npm start
+
+========================================
+
+
+Here are some suggestions for additional fields that might be valuable for a human resource request form:
+
+1. **Job/Position Details:**
+   - Job Level (Junior, Mid, Senior, Lead, etc.)
+   - Employment Type (Full-time, Contract, Intern)
+   - Work Location (Office, Remote, Hybrid)
+   - Department/Team
+   - Reporting Manager
+
+2. **Budget Information:**
+   - Budget Range/Band
+   - Cost Center
+   - Project Code/Billing Code
+
+3. **Experience Requirements:**
+   - Years of Experience Required
+   - Essential Technical Skills (could be a multi-select)
+   - Required Certifications
+   - Education Requirements
+
+4. **Business Justification:**
+   - Reason for Requirement (New Project, Replacement, Additional Support)
+   - Business Impact
+   - Priority Justification
+   - Risk if Not Fulfilled
+
+5. **Additional Requirements:**
+   - Language Requirements
+   - Shift/Time Zone Requirements
+   - Travel Requirements (if any)
+   - Security Clearance Requirements
+
+6. **Process Related:**
+   - Interview Panel Suggestions
+   - Preferred Notice Period
+   - Any Pre-approved Exceptions
+   - Special Onboarding Requirements
+
+7. **Attachments:**
+   - Detailed Job Description
+   - Any Supporting Documents
+
+8. **Approvals Section:**
+   - Required Approvers List
+   - Budget Approval Status
+   - Headcount Approval Status
+
+Would you like me to elaborate on any of these categories?
+
+
+=====================
+
+Absolutely! I'd be happy to discuss any questions you have about:
+
+1. The current implementation
+2. Best practices we've used
+3. Potential improvements
+4. Scalability considerations
+5. Future integrations
+6. Code organization
+7. State management as the app grows
+8. Testing strategies
+9. Performance optimizations
+10. Or any other aspects you'd like to explore
+
+Please feel free to ask your questions, and I'll help provide detailed explanations or suggestions.
+
+
+========================
+
+
+
+Here's the architectural overview for the Resource Requisition Service:
+
+**1. Repository Structure:**
+```
+resource-requisition-service/
+├── src/
+│   ├── api/                    # API layer
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   ├── middlewares/
+│   │   └── validators/
+│   ├── domain/                 # Business logic
+│   │   ├── models/
+│   │   ├── services/
+│   │   └── interfaces/
+│   ├── infrastructure/         # External dependencies
+│   │   ├── database/
+│   │   ├── messaging/
+│   │   └── external-services/
+│   └── utils/
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   └── e2e/
+├── config/
+├── scripts/
+├── Dockerfile
+├── docker-compose.yml
+└── package.json
+```
+
+**2. Key Components:**
+- **API Layer**: REST endpoints for requisition operations
+- **Domain Layer**: Core business logic for resource requisition
+- **Infrastructure Layer**: Database operations, message queue interactions
+- **Service Layer**: Orchestration of business operations
+
+**3. Database Design:**
+- Separate database for this service (Database per Service pattern)
+- Tables:
+  - Requisitions
+  - ResourceDistributions
+  - ResourceDates
+  - RequisitionStatus
+  - RequisitionHistory
+
+**4. Containerization:**
+- Multi-stage Dockerfile for optimized builds
+- Separate containers for:
+  - Application
+  - Database
+  - Cache (if needed)
+- Docker Compose for local development
+- Kubernetes manifests for production
+
+**5. External Communications:**
+- REST APIs for synchronous operations
+- Message Queue (RabbitMQ/Kafka) for asynchronous events
+- Service mesh for inter-service communication
+
+**6. Key Features:**
+- Circuit breakers for external service calls
+- Rate limiting
+- Request validation
+- Error handling
+- Logging & Monitoring
+- Health checks
+
+**7. Dependencies on Other Services:**
+- Master Data Service: For projects, departments, etc.
+- User Service: For authentication/authorization
+- Notification Service: For status updates
+- Resource Management Service: For availability checks
+
+**8. Security:**
+- JWT validation
+- Role-based access control
+- API key authentication for service-to-service communication
+- Request/Response encryption where needed
+
+**9. Scalability Considerations:**
+- Horizontal scaling capability
+- Database sharding strategy
+- Caching strategy
+- Connection pooling
+
+**10. Monitoring & Observability:**
+- Prometheus metrics
+- Grafana dashboards
+- Distributed tracing
+- Centralized logging
+
+**11. CI/CD Pipeline:**
+- Build stages
+- Test stages
+- Security scanning
+- Container registry push
+- Deployment strategies
+
+Would you like me to elaborate on any of these aspects or discuss specific implementation details for any component?
